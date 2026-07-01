@@ -16,7 +16,7 @@ class NewsService
                     ->orWhere('content', 'like', "%{$search}%");
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(6);
     }
 
     public function findById(int $id): News
