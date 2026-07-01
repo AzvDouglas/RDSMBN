@@ -4,11 +4,13 @@ import { getNews } from "../services/newsService";
 import NewsGrid from "../components/news/NewsGrid";
 import Pagination from "../components/news/Pagination";
 import MainLayout from "../components/layout/MainLayout";
+import SearchBar from "../components/news/SearchBar";
 
 export default function HomePage() {
   const [news, setNews] = useState([]);
   const [meta, setMeta] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function loadNews() {
@@ -20,6 +22,11 @@ export default function HomePage() {
 
     loadNews();
   }, [currentPage]);
+
+  const filteredNews = news.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <MainLayout>
@@ -35,11 +42,22 @@ export default function HomePage() {
         >
           Nossas notícias
         </h1>
-
        
       </section>
 
-      <NewsGrid news={news} />
+      <SearchBar 
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
+      {filteredNews.length === 0 ? (
+        <p className="text-center text-gray-500">
+          Nenhuma notícia encontrada.
+        </p>
+      ) : (
+        <NewsGrid news={filteredNews} />
+      )}
+
+      <NewsGrid news={filteredNews} />      
 
       {meta && (
         <Pagination

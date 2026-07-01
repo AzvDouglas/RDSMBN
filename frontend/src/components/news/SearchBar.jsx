@@ -1,13 +1,25 @@
 export default function SearchBar({
-  search,
-  setSearch,
+  searchTerm,
+  setSearchTerm,
 }) {
   return (
-    <input
-      type="text"
-      placeholder="Pesquisar notícia..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
+    <div className="mb-10">
+      <input
+        type="text"
+        placeholder="Pesquise pela palavra-chave: "
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="
+          w-full
+          p-4
+          border
+          border-gray-300
+          rounded-lg
+          focus:outline-none
+          focus:ring-2
+          focus:ring-[#00A8E8]
+        "
+      />
+    </div>
   );
 }
