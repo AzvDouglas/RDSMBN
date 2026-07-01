@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    /** @use HasFactory<\Database\Factories\NewsFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'excerpt',
+        'content',
+        'cover_image',
+        'published_at',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
 }
