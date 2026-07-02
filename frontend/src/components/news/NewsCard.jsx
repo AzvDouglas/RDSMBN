@@ -15,6 +15,7 @@ export default function NewsCard({ news }) {
           h-[320px]
           transition
           hover:shadow-lg
+          rounded-lg
         "
       >
         <div className="w-2/5">
@@ -26,6 +27,9 @@ export default function NewsCard({ news }) {
               h-full
               object-cover
             "
+            onError={(e) => {
+              e.target.src = newsPlaceholder;
+            }}
           />
         </div>
 

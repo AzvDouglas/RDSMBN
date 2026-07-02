@@ -23,10 +23,11 @@ class UpdateNewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'title' => ['required', 'max:255'],
-        'excerpt' => ['nullable', 'max:1000'],
-        'content' => ['required'],
-        'published_at' => ['nullable', 'date'],
+            'title' => ['required', 'max:255'],
+            'excerpt' => ['nullable', 'max:1000'],
+            'content' => ['required'],
+            'cover_image' => ['nullable', 'url'],
+            'published_at' => ['nullable', 'date'],
         ];
     }
 }
