@@ -1,4 +1,28 @@
+import { Link } from "react-router-dom";
+import { deleteNews } from "../../services/newsService";
+
 export default function NewsTable({ news }) {
+
+  async function handleDelete(id) {
+    const confirmed = window.confirm(
+      "Deseja realmente excluir esta notícia?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteNews(id);
+
+      alert("Notícia excluída com sucesso");
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+
+      alert("Erro ao excluir notícia");
+    }
+  }
+
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden">
       <table className="w-full">
@@ -30,13 +54,17 @@ export default function NewsTable({ news }) {
               </td>
 
               <td className="p-4">
-                {new Date(
-                  item.published_at
-                ).toLocaleDateString("pt-BR")}
+                {item.published_at
+                  ? new Date(item.published_at)
+                      .toLocaleDateString("pt-BR")
+                  : "-"
+                }
               </td>
 
-              <td className="p-4">
-                <button
+              <td className="p-4 flex gap-2">
+
+                <Link
+                  to={`/admin/news/${item.id}/edit`}
                   className="
                     bg-blue-500
                     text-white
@@ -46,7 +74,21 @@ export default function NewsTable({ news }) {
                   "
                 >
                   Editar
+                </Link>
+
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="
+                    bg-red-500
+                    text-white
+                    px-3
+                    py-1
+                    rounded
+                  "
+                >
+                  Excluir
                 </button>
+
               </td>
             </tr>
           ))}

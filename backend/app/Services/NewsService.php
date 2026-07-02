@@ -30,7 +30,10 @@ class NewsService
             Str::slug($data['title'])
             . '-'
             . now()->timestamp;
-            
+
+        $data['published_at'] =
+            $data['published_at'] ?? now();
+
         return News::create($data);
     }
 

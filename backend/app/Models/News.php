@@ -18,7 +18,16 @@ class News extends Model
         'published_at',
     ];
 
-    protected $casts = [
+    protected $casts = [    
         'published_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+{
+    static::creating(function (News $news) {
+        if (!$news->published_at) {
+            $news->published_at = now();
+        }
+    });
+}
 }
